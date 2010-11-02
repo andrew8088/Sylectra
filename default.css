@@ -1,0 +1,36 @@
+body {
+    font: 13px/1.5 'Helvetica Neue', helvetica, arial, san-serif;
+    padding:0;
+    margin:0;
+background:#EBC37E;
+}
+header, section, footer {
+display:block;
+}
+#main {
+width: 920px;
+margin:auto;
+background:#E7AF58;
+border:2px solid #000;
+border-top:0px;
+padding:20px;
+}
+h1, h2 {
+color: #341405;
+margin:0;
+font-family: 'Neucha', arial, serif;
+font-size:50px;
+}
+h2 {
+font-size:20px;
+}
+code {
+color:#505050;
+}
+
+
+footer {
+padding-top:20px;
+border-top:1px solid #000;
+}
+

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title> Sylectra | An Intensely Basic CSS DOM Selector </title>
+    <link rel='stylesheet' href='default.css' />
+    <link href='http://fonts.googleapis.com/css?family=Neucha&subset=latin' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div id="main">
+    <header>
+        <h1>Sylectra - An Intensely Basic CSS Dom Selector</h1>
+        <h2> (Seriously, you can't get any more simple) </h2>
+    </header>
+    <section>
+    <p>I know&mdash;the pilgrimage to building a full-featured selector engine is a long and hard journey that few dare to attempt. However, a bit of free time gave me the opportunity to climb to a small hill and feel the breezes from the distant mountain where Sizzle, NWMatcher, and the rest of that elite breed dwell.</p>  
+
+    <p>Sylectra is my feeble attempt at creating a selector engine. You should probably never use it, but you might want to read through the code. Actually, that might be a bad idea; see, I've never read through the source code of a <em>real</em> selector engine, so I have so idea how the well-known ones actually operate. </p>
+
+    <p>Sylectra works with only the simplest of selector:</p>
+    
+        <ul>
+        	<li>
+            Ids : <code>#content</code>
+        	</li>
+        	<li class="sample">
+            Classes : <code>.tabbed-container</code>
+        	</li>
+        	<li>
+            Elements : <code>div</code>
+        	</li>
+        	<li class="sample">
+            Element + (id || class) : <code>div#sidebar</code> <em> or </em> <code>li.product</code>
+        	</li>
+            <li>
+            Any combination of the above : <code>#main .panels li a</code>
+            </li>
+        </ul>
+
+        <p> <strong> Yes, that's all; I said it was basic.</strong></p>
+
+        <p class="sample"> To further discourage you from using Sylectra, notice that it does not support direct children (<code>&gt;</code>) selectors, attribute selectors, multiple (comma-delimited) selectors (though I may add that). Of course, it doesn't work in browsers that don't support <code>document.getElementsByClassName</code>.</p> 
+
+        <p>To use Sylectra (and remember: don't), you just call the <code>SYLECTRA</code> function, passing in a CSS selector. You'll get back an element or an array of elements (or a NodeList, but it's an array-like object, so for all intents and purposes, use it like an array). It's that easy. Bust open that console (you may need to refresh the page) to see a few test selectors</p>
+    </section>
+    <footer>
+        Created by Andrew Burgess (<a href="http://www.twitter.com/andrew8088">andrew8088</a>) in October 2010; absolutely no copyright, so do whatever you want with the code.
+    </footer>
+
+</div>
+    <script src="sylectra.js"></script>
+
+    <script>
+        var selectors = ['div#main', 'body', 'section', 'body div#main', 'p', 'ul li', '.sample', 'strong', 'em'], i = 0;
+        console.profile("sylectra");
+        while (selectors[i]) {
+            var el = SYLECTRA(selectors[i]);
+            console.log("selector: ", selectors[i], " | result: ", el);
+            i++;
+        }
+        console.profileEnd();
+        
+    </script>
+</body>
+</html>
