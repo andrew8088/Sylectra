@@ -1,12 +1,16 @@
 var SYLECTRA = function (selector) {
+
+    var i, len, curr_col, element, par, ret_arr = [], fns;
+
     if (selector.indexOf('#') > -1) {
         selector = selector.split('#');
         selector = '#' + selector[selector.length -1];
     }
     selector = selector.split(' ');
-    var i, len = selector.length, curr_col = document;
-    
-    var fns = {
+
+    len = selector.length;
+    curr_col = document;
+    fns = {
         // @param `sel` string : the id of an element
         id : function (sel) {
             return document.getElementById(sel);
@@ -42,22 +46,21 @@ var SYLECTRA = function (selector) {
     };
         
     for ( i = 0; i < len; i++ ) {
-        var element = selector[i], par = curr_col; 
-        //curr_col = find(selector[i], curr_col);
+        element = selector[i];
+        par = curr_col; 
          if (element.indexOf('#') === 0) {
              curr_col = fns.id(element.split('#')[1]);
         } else if (element.indexOf('.') > -1) {
-            var arr = [], i;
             element = element.split('.');
             if (element[0]) { // if there's an element prefixed on the class name
                 par = fns.element(element[0], par);
                 if (par.length) {
                     for (i = 0; par[i]; i++) {
                         if(par[i].className.indexOf(element[1]) > -1) {
-                            arr.push(par[i]);
+                            ret_arr.push(par[i]);
                         }
                     }
-                     curr_col = arr;
+                     curr_col = ret_arr;
                 } else {
                      curr_col = par;
                 }
