@@ -2,49 +2,34 @@ var SYLECTRA = function (selector) {
 
     var i, len, curr_col, element, par, ret_arr = [], fns;
 
-    if (selector.indexOf('#') > -1) {
+    if (selector.indexOf('#') > 0) {
         selector = selector.split('#');
         selector = '#' + selector[selector.length -1];
     }
     selector = selector.split(' ');
 
-    len = selector.length;
-    curr_col = document;
     fns = {
         // @param `sel` string : the id of an element
         id : function (sel) {
             return document.getElementById(sel);
         },
+        // @param `c_or_e` string : defines whether we're getting by class or element name; is either 'class' or 'elements'
         // @param `sel` string : a class name
         // @param `par` Node or NodeList (optional) : the parent element(s) for the selector; defaults to `document`
-        klass : function (sel, par) {
-            var i = 0, arr = [];
-            par = par || document;
+        get : function (c_or_e, sel, par) {
+            var i = 0, len, arr = [], get_what = (c_or_e === 'class') ? 'getElementsByClassName' : 'getElementsByTagName';
             if (par.length) {
-                for (; par[i]; i++) {
-                   Array.prototype.push.apply(arr, Array.prototype.slice.call(par[i].getElementsByClassName(sel))); 
-                }
-                return (arr.length === 1) ? arr[0] : arr;
+               while (par[i]) { Array.prototype.push.apply(arr, Array.prototype.slice.call(par[i++][get_what](sel))); }
+            } else {
+                arr = par[get_what](sel);
             }
-            par = par.getElementsByClassName(sel);
-            return (par.length === 1) ? par[0] : par;
-        },
-        // @param `sel` string : an element name
-        // @param `par` Node or NodeList (optional) : the parent element(s) for the selector; defaults to `document`
-        element : function (sel, par) {
-            var i = 0, arr = [];
-            par = par || document;
-            if (par.length) {
-                for (; par[i]; i++) {
-                    Array.prototype.push.apply(arr, Array.prototype.slice.call(par[i].getElementsByTagName(sel)));
-                }
-                return (arr.length === 1) ? arr[0] : arr;
-            }
-            par = par.getElementsByTagName(sel);
-            return (par.length === 1) ? par[0] : par;
+            return (arr.length === 1) ? arr[0] : arr;
         }
     };
         
+    len = selector.length;
+    curr_col = document;
+
     for ( i = 0; i < len; i++ ) {
         element = selector[i];
         par = curr_col; 
@@ -53,7 +38,7 @@ var SYLECTRA = function (selector) {
         } else if (element.indexOf('.') > -1) {
             element = element.split('.');
             if (element[0]) { // if there's an element prefixed on the class name
-                par = fns.element(element[0], par);
+                par = fns.get('elements', element[0], par);
                 if (par.length) {
                     for (i = 0; par[i]; i++) {
                         if(par[i].className.indexOf(element[1]) > -1) {
@@ -62,13 +47,13 @@ var SYLECTRA = function (selector) {
                     }
                      curr_col = ret_arr;
                 } else {
-                     curr_col = par;
+                     curr_col = (par.className.indexOf(element[1]) > -1) ? par : [];
                 }
             } else {
-                 curr_col = fns.klass(element[1], par);
+                 curr_col = fns.get('class', element[1], par);
             }
         } else { // regular element selector
-             curr_col = fns.element(element, par);
+             curr_col = fns.get('elements', element, par);
         }  
     }
 
