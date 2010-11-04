@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title> Sylectra | An Intensely Basic CSS DOM Selector </title>
+</head>
+<body>
+<div id="main">
+
+    <header>#man header</header>
+
+    <section>
+        <h1>section h1</h1>
+
+        <ul>
+        	<li class="button">
+        		<a href="#">ul li.button a 1</a>
+        	</li>
+        	<li>
+        		<a href="#" class="selected">ul li a.selected 2</a>
+        	</li>
+        	<li>
+        		<a href="#">ul li a 3</a>
+        	</li>
+        	<li>
+        		<a href="#" class="selected">ul li a.selected 4</a>
+        	</li>
+        	<li id="last">
+        		<a href="#">ul li#last a 5</a>
+        	</li>
+        </ul>
+
+        <p> section p</p>
+
+        <p class="other"> section p.other <strong> strong </strong> </p>
+
+    </section>
+
+    <footer>
+        <p> footer p </p>
+    </footer>
+</div>
+    <script src="sylectra.js"></script>
+
+    <script>
+        var selectors = ['div#main', 'body', 'section', 'body div#main', 'p', 'ul li', '.selected', 'strong', '#last p'], i = 0;
+        //console.profile("sylectra");
+        while (selectors[i]) {
+            var el = SYLECTRA(selectors[i]);
+            console.log("selector: ", selectors[i], " | result: ", el);
+            i++;
+        }
+        //console.profileEnd();
+        
+    </script>
+</body>
+</html>
