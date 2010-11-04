@@ -53,7 +53,6 @@ var SYLECTRA = function (selector) {
             } else {
                  curr_col = fns.get('class', element[1], par);
             }
-            return fns.klass(element[1], par);
         } else { // regular element selector
              curr_col = fns.get('elements', element, par);
         }  
